@@ -1,16 +1,20 @@
-import { user } from './user.js'
+import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
+import { App } from './app.js'
+import { AuthController } from './auth/auth.controller.js'
+import { AuthMiddleware } from './auth/auth.middleware.js'
+import { AuthService } from './auth/auth.service.js'
+import { CognitoService } from './auth/cognito.service.js'
 
-async function fetchNumber (): Promise<number> {
-  return await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // resolve(1)
-      reject(new Error('Happened'))
-    }, 3000)
-  })
-}
+dotenv.config()
 
-const number = await fetchNumber()
+const app = new App({
+  middlewares: [
+    bodyParser.json()
+  ],
+  controllers: [
+    new AuthController(new AuthService(new CognitoService()), new AuthMiddleware())
+  ]
+})
 
-console.log('Number is', number)
-
-console.log('User name is', user.name)
+app.bootstrap()
