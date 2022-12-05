@@ -1,0 +1,31 @@
+{
+  "name": "messenger-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.ts",
+    "lint": "ts-standard --fix | snazzy",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enheit/messenger-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enheit/messenger-api/issues"
+  },
+  "homepage": "https://github.com/enheit/messenger-api#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.10",
+    "husky": "^8.0.2",
+    "nodemon": "^2.0.20",
+    "snazzy": "^9.0.0",
+    "ts-node": "^10.9.1",
+    "ts-standard": "^12.0.1",
+    "typescript": "^4.9.3"
+  }
+}
