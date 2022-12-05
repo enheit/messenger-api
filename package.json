@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon index.ts",
+    "prepare": "husky install",
+    "start": "nodemon src/index.ts",
     "lint": "ts-standard --fix | snazzy",
-    "prepare": "husky install"
+    "build": "tsc --build",
+    "prod": "node ./build/index.js"
   },
   "repository": {
     "type": "git",

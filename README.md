@@ -14,3 +14,22 @@ Snazzy adds colors to the console output
 ```
 
 ---
+
+To support ESM add to `tsconfig.json` 
+
+```
+{
+  "ts-node": {
+    "esm": true
+  },
+  "compierOptions" { ... }
+}
+```
+
+in package.json
+
+```
+{
+  "type": "module",
+}
+```
