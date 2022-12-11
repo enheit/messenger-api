@@ -1,0 +1,53 @@
+version: '3'
+services:
+  messenger-mongodb-1:
+    container_name: messenger-mongodb-1
+    image: mongo:6.0.3
+    command: mongod --replSet messenger-mongodb-replica-set --bind_ip_all
+    ports:
+      - 27017:27017
+    networks:
+      - messenger-mongodb-cluster
+    volumes:
+      - messenger-mongodb-1-data:/data/db
+    depends_on:
+      - messenger-mongodb-2
+      - messenger-mongodb-3
+    healthcheck:
+      test: test $$(echo "rs.initiate({_id:\"messenger-mongodb-replica-set\",members:[{_id:0,host:\"messenger-mongodb-1\"},{_id:1,host:\"messenger-mongodb-2\"},{_id:2,host:\"messenger-mongodb-3\"}]}).ok || rs.status().ok" | mongo --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+
+  messenger-mongodb-2:
+    container_name: messenger-mongodb-2
+    image: mongo:6.0.3
+    command: mongod --replSet messenger-mongodb-replica-set --bind_ip_all
+    ports:
+      - 27018:27017
+    networks:
+      - messenger-mongodb-cluster
+    environment:
+      - MONGO_INITDB_DATABASE=messenger-db
+    volumes:
+      - messenger-mongodb-2-data:/data/db
+
+  messenger-mongodb-3:
+    container_name: messenger-mongodb-3
+    image: mongo:6.0.3
+    command: mongod --replSet messenger-mongodb-replica-set --bind_ip_all
+    ports:
+      - 27019:27017
+    networks:
+      - messenger-mongodb-cluster
+    environment:
+      - MONGO_INITDB_DATABASE=messenger-db
+    volumes:
+      - messenger-mongodb-3-data:/data/db
+
+networks:
+  messenger-mongodb-cluster:
+
+volumes:
+  messenger-mongodb-1-data:
+  messenger-mongodb-2-data:
+  messenger-mongodb-3-data:
